@@ -53,9 +53,27 @@ public static double grossPayCalculator(int hours, double hourlyRate){
   }
 
   public static void main(String[] args) {
+    double hourlyRate = 16.78;
     System.out.println("Welcome to the Payroll Program!\n");
 
     Scanner sc = new Scanner(System.in);
+    System.out.println("Would you like to keep the current hourly wage of $16.78? Valid Responses follow Yes, Y, No, N" );
+    String customPayrateResponse = sc.nextLine();
+    
+    if (customPayrateResponse.equals("No") || customPayrateResponse.equals("N")) {
+      boolean validResponse = false;
+      
+      while(!validResponse){
+        System.out.println("What would you like your customized payrate to be?");
+        hourlyRate = sc.nextDouble();
+
+        if (hourlyRate < 0) {
+          System.out.println("That isn't a valid pay rate, it cannot be negative!");
+        } else {
+          validResponse = true;
+        }
+      }
+    }
 
     System.out.println("How many hours did you work this week? ");
     int hours = sc.nextInt();
@@ -64,7 +82,6 @@ public static double grossPayCalculator(int hours, double hourlyRate){
     int children = sc.nextInt();
 
     sc.close();
-    double hourlyRate = 16.78;
     double grossPay = grossPayCalculator(hours, hourlyRate);
     double[] deductions = deductionsCalculator(grossPay, children);
     double netPay = netPayCalculator(grossPay, deductions);
