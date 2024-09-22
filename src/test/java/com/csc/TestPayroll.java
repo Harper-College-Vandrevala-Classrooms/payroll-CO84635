@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestPayroll {
-
   Payroll payroll;
 
   @BeforeEach
@@ -36,8 +35,37 @@ public class TestPayroll {
   }
 
   @Test
+  public void testGrossPayCalculatorCustomRegularHours() {
+    double hourlyRate = 20.00;
+    int hours = 40;
+    double expectedGrossPay = hours * hourlyRate;
+    double actualGrossPay = Payroll.grossPayCalculator(hours, hourlyRate);
+    assertEquals(expectedGrossPay, actualGrossPay);
+  }
+
+  @Test
+  public void testGrossPayCalculatorCustomOvertimeHours() {
+    double hourlyRate = 20.00;
+    int hours = 50;
+    double regularHours = 40;
+    double overtimeHours = hours - regularHours;
+    double expectedGrossPay = (regularHours * hourlyRate) + (overtimeHours * 1.5 * hourlyRate);
+    double actualGrossPay = Payroll.grossPayCalculator(hours, hourlyRate);
+    assertEquals(expectedGrossPay, actualGrossPay);
+  }
+
+  @Test
   public void testGrossPayCalculatorNoHours() {
     double hourlyRate = 16.78;
+    int hours = 0;
+    double expectedGrossPay = 0;
+    double actualGrossPay = Payroll.grossPayCalculator(hours, hourlyRate);
+    assertEquals(expectedGrossPay, actualGrossPay);
+  }
+
+  @Test
+  public void testGrossPayCalculatorNoHoursCustomPay() {
+    double hourlyRate = 20.00;
     int hours = 0;
     double expectedGrossPay = 0;
     double actualGrossPay = Payroll.grossPayCalculator(hours, hourlyRate);
